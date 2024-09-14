@@ -1,9 +1,12 @@
 const express = require('express');
+const config = require('../../config/config');
 const authRoute = require('./auth.route');
+
 const userRoute = require('./user.route');
 const docsRoute = require('./docs.route');
-const config = require('../../config/config');
 
+const teacherRoute = require('./teacher.route')
+const studentRoute = require('./student.route')
 const router = express.Router();
 
 const defaultRoutes = [
@@ -15,6 +18,14 @@ const defaultRoutes = [
     path: '/users',
     route: userRoute,
   },
+  {
+    path: '/teachers',
+    route: teacherRoute,
+  },
+  {
+    path: '/students',
+    route: studentRoute,
+  }
 ];
 
 const devRoutes = [

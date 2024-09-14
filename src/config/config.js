@@ -23,6 +23,12 @@ const envVarsSchema = Joi.object()
     SMTP_USERNAME: Joi.string().description('username for email server'),
     SMTP_PASSWORD: Joi.string().description('password for email server'),
     EMAIL_FROM: Joi.string().description('the from field in the emails sent by the app'),
+    MINIO_ENDPOINT: Joi.string().default('localhost'),
+    MINIO_PORT: Joi.number().default(9000),
+    MINIO_USE_SSL: Joi.boolean().default(false),
+    ACCESS_KEY: Joi.string().description("minio user id"),
+    SECRET_KEY: Joi.string().description("minio password"),
+    BUCKET_NAME: Joi.string().default('').description("bucket name"),
   })
   .unknown();
 
@@ -61,4 +67,12 @@ module.exports = {
     },
     from: envVars.EMAIL_FROM,
   },
+  minio: {
+    endPoint: envVars.MINIO_ENDPOINT,
+    port: envVars.MINIO_PORT,
+    useSSL: envVars.MINIO_USE_SSL,
+    access_key: envVars.ACCESS_KEY,
+    secret_key: envVars.SECRET_KEY,
+    bucket_name: envVars.BUCKET_NAME
+  }
 };
