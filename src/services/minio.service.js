@@ -12,11 +12,19 @@ const minioClient = new Minio.Client({
 const { bucketName } = config.minio;
 
 const listBucket = async () => {
+  console.log({
+    endPoint: config.minio.endPoint,
+    port: config.minio.port,
+    useSSL: config.minio.useSSL,
+    accessKey: config.minio.access_key,
+    secretKey: config.minio.secret_key,
+  })
   try {
     const buckets = await minioClient.listBuckets();
     return buckets;
     // console.log('Success', buckets);
   } catch (err) {
+    return err
     // console.log(err.message);
   }
 };

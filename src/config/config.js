@@ -26,8 +26,8 @@ const envVarsSchema = Joi.object()
     MINIO_ENDPOINT: Joi.string().default('localhost'),
     MINIO_PORT: Joi.number().default(9000),
     MINIO_USE_SSL: Joi.boolean().default(false),
-    ACCESS_KEY: Joi.string().description('minio user id'),
-    SECRET_KEY: Joi.string().description('minio password'),
+    MINIO_ACCESS_KEY: Joi.string().description('minio user id'),
+    MINIO_SECRET_KEY: Joi.string().description('minio password'),
     BUCKET_NAME: Joi.string().default('').description('bucket name'),
   })
   .unknown();
@@ -71,8 +71,8 @@ module.exports = {
     endPoint: envVars.MINIO_ENDPOINT,
     port: envVars.MINIO_PORT,
     useSSL: envVars.MINIO_USE_SSL,
-    access_key: envVars.ACCESS_KEY,
-    secret_key: envVars.SECRET_KEY,
+    access_key: envVars.MINIO_ACCESS_KEY,
+    secret_key: envVars.MINIO_SECRET_KEY,
     bucket_name: envVars.BUCKET_NAME,
   },
 };

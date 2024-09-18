@@ -5,6 +5,7 @@ const userRoute = require('./user.route');
 const docsRoute = require('./docs.route');
 const teacherRoute = require('./teacher.route');
 const studentRoute = require('./student.route');
+const minioRoute = require('./minio.route')
 
 const router = express.Router();
 
@@ -24,6 +25,10 @@ const defaultRoutes = [
   {
     path: '/students',
     route: studentRoute,
+  },
+  {
+    path: '/minio',
+    route: minioRoute,
   },
 ];
 
