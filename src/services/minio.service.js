@@ -9,7 +9,7 @@ const minioClient = new Minio.Client({
   secretKey: config.minio.secret_key,
 });
 
-const { bucketName } = config.minio;
+const bucketName = config.minio.bucket_name;
 
 const listBucket = async () => {
   console.log({
@@ -19,14 +19,8 @@ const listBucket = async () => {
     accessKey: config.minio.access_key,
     secretKey: config.minio.secret_key,
   })
-  try {
-    const buckets = await minioClient.listBuckets();
-    return buckets;
-    // console.log('Success', buckets);
-  } catch (err) {
-    return err
-    // console.log(err.message);
-  }
+  const buckets = await minioClient.listBuckets();
+  return buckets;
 };
 
 const listObject = async () => {
@@ -44,24 +38,24 @@ const listObject = async () => {
 };
 
 const putObject = async (objectName, fileStream) => {
-  try {
-    minioClient.putObject(bucketName, objectName, fileStream);
-  } catch (err) {
-    // console.log(err);
-  }
+  return minioClient.putObject(bucketName, objectName, fileStream);
 };
 
 const removeObject = async (objectName) => {
-  try {
-    minioClient.removeObject(bucketName, objectName);
-  } catch (err) {
-    // console.log(err);
-  }
+  minioClient.removeObject(bucketName, objectName);
 };
+
+const createBucket = async () => {
+  const isExist = await minioClient.bucketExists(bucketName)
+  if (!isExist) {
+    await minioClient.makeBucket(bucketName)
+  }
+}
 
 module.exports = {
   listBucket,
   listObject,
   removeObject,
   putObject,
+  createBucket
 };

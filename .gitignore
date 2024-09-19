@@ -7,6 +7,9 @@ yarn-error.log
 # Environment varibales
 .env*
 !.env*.example
+# minio data
+data
+uploads
 
 # Code coverage
 coverage
