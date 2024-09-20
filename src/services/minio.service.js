@@ -12,13 +12,6 @@ const minioClient = new Minio.Client({
 const bucketName = config.minio.bucket_name;
 
 const listBucket = async () => {
-  console.log({
-    endPoint: config.minio.endPoint,
-    port: config.minio.port,
-    useSSL: config.minio.useSSL,
-    accessKey: config.minio.access_key,
-    secretKey: config.minio.secret_key,
-  })
   const buckets = await minioClient.listBuckets();
   return buckets;
 };
@@ -46,16 +39,16 @@ const removeObject = async (objectName) => {
 };
 
 const createBucket = async () => {
-  const isExist = await minioClient.bucketExists(bucketName)
+  const isExist = await minioClient.bucketExists(bucketName);
   if (!isExist) {
-    await minioClient.makeBucket(bucketName)
+    await minioClient.makeBucket(bucketName);
   }
-}
+};
 
 module.exports = {
   listBucket,
   listObject,
   removeObject,
   putObject,
-  createBucket
+  createBucket,
 };

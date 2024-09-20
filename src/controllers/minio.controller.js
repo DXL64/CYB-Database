@@ -23,7 +23,15 @@ const putObject = catchAsync(async (req, res) => {
   })
 })
 
+const test = catchAsync(async (req, res) => {
+  res.json({
+    message: 'Ok',
+    req: req.body
+  })
+})
+
 module.exports = {
   getBuckets,
-  putObject
+  putObject,
+  test
 }
