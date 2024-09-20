@@ -1,12 +1,22 @@
 const httpStatus = require('http-status');
-const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
+const pick = require('../utils/pick');
+const fs = require('fs');
+const path = require('path');
 const catchAsync = require('../utils/catchAsync');
 const { studentService } = require('../services');
+const { minioService } = require('../services')
 
 const createStudent = catchAsync(async (req, res) => {
-  // const { img } = req.body;
-  // console.log(img);
+  if (!req.file) {
+    return res.status(httpStatus.BAD_REQUEST).send({ message: 'File is required' });
+  }
+  const imgSrc = `students/${req.file.filename}.jpg`;
+  const filePath = req.file.path;
+  const fileStream = fs.createReadStream(filePath);
+  const fileStat = fs.statSync(filePath);
+  await minioService.putObject(imgSrc, fileStream, fileStat.size);
+  req.body.imgSrc = imgSrc;
   const student = await studentService.createStudent(req.body);
   res.status(httpStatus.CREATED).send(student);
 });
