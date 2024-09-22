@@ -1,12 +1,20 @@
 const express = require('express');
+const multer = require('multer');
 const validate = require('../../middlewares/validate');
-const teacherController = require('../../controllers/teacher.controller');
-const teacherValidation = require('../../validations/teacher.validation');
+const { teacherController } = require('../../controllers');
+const { teacherValidation } = require('../../validations');
+
+const upload = multer({ dest: 'uploads/' });
 
 const router = express.Router();
+
 router.get('/', validate(teacherValidation.getTeachers), teacherController.getTeachers);
 router.get('/:teacherId', validate(teacherValidation.getTeacher), teacherController.getTeacher);
-router.post('/', validate(teacherValidation.createTeacher), teacherController.createTeacher);
-router.put('/:teacherId', validate(teacherValidation.updateTeacher), teacherController.updateTeacher);
+router.post('/', [upload.single('file'), validate(teacherValidation.createTeacher)], teacherController.createTeacher);
+router.put(
+  '/:teacherId',
+  validate([upload.single('file'), teacherValidation.updateTeacher]),
+  teacherController.updateTeacher
+);
 
 module.exports = router;

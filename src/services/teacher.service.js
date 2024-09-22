@@ -1,9 +1,21 @@
+const fs = require('fs');
+const defu = require('defu');
 const httpStatus = require('http-status');
+const minioService = require('./minio.service');
 const ApiError = require('../utils/ApiError');
 const Teacher = require('../models/teacher.model');
 
 const createTeacher = async (teacherBody) => {
-  return Teacher.create(teacherBody);
+  const imgSrc = `teachers/${teacherBody.file.filename}.jpg`;
+  const filePath = teacherBody.file.path;
+  const fileStream = fs.createReadStream(filePath);
+  const fileStat = fs.statSync(filePath);
+  await minioService.putObject(imgSrc, fileStream, fileStat.size);
+  const newTeacher = {
+    ...teacherBody,
+    imgSrc,
+  };
+  return Teacher.create(newTeacher);
 };
 
 const queryTeachers = async (filter, options) => {
@@ -22,11 +34,25 @@ const getTeacherById = async (id) => {
 };
 
 const updateTeacherById = async (id, updateBody) => {
-  const teacher = await getTeacherById(id);
+  const teacher = await Teacher.findById(id);
   if (!teacher) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Teacher not found');
   }
-  Object.assign(teacher, updateBody);
+  if (updateBody.file) {
+    const imgSrc = `teachers/${updateBody.file.filename}.jpg`;
+    const filePath = updateBody.file.path;
+    const fileStream = fs.createReadStream(filePath);
+    const fileStat = fs.statSync(filePath);
+
+    await minioService.putObject(imgSrc, fileStream, fileStat.size);
+
+    // eslint-disable-next-line no-param-reassign
+    updateBody.imgSrc = imgSrc;
+  }
+  // Kết hợp updateBody với thông tin của student
+  const updatedData = defu(updateBody, teacher.toObject());
+  // console.log(updatedData);
+  Object.assign(teacher, updatedData); // Gán lại giá trị cho student
   await teacher.save();
   return teacher;
 };

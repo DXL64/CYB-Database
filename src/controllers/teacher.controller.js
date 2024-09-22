@@ -5,9 +5,20 @@ const catchAsync = require('../utils/catchAsync');
 const { teacherService } = require('../services');
 
 const createTeacher = catchAsync(async (req, res) => {
-  console.log(req)
+  if (!req.file) {
+    return res.status(httpStatus.BAD_REQUEST).send({ message: 'File is required' });
+  }
+  req.body.file = req.file;
   const teacher = await teacherService.createTeacher(req.body);
   res.status(httpStatus.CREATED).send(teacher);
+});
+
+const updateTeacher = catchAsync(async (req, res) => {
+  if (req.file) {
+    req.body.file = req.file;
+  }
+  const teacher = await teacherService.updateTeacherById(req.params.teacherId, req.body);
+  res.send(teacher);
 });
 
 const getTeachers = catchAsync(async (req, res) => {
@@ -22,11 +33,6 @@ const getTeacher = catchAsync(async (req, res) => {
   if (!teacher) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Teacher not found');
   }
-  res.send(teacher);
-});
-
-const updateTeacher = catchAsync(async (req, res) => {
-  const teacher = await teacherService.updateTeacherById(req.params.teacherId, req.body);
   res.send(teacher);
 });
 
