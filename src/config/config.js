@@ -7,7 +7,7 @@ dotenv.config({ path: path.join(__dirname, '../../.env') });
 const envVarsSchema = Joi.object()
   .keys({
     NODE_ENV: Joi.string().valid('production', 'development', 'test').required(),
-    PORT: Joi.number().default(3000),
+    PORT: Joi.number().default(8000),
     MONGODB_URL: Joi.string().required().description('Mongo DB url'),
     JWT_SECRET: Joi.string().required().description('JWT secret key'),
     JWT_ACCESS_EXPIRATION_MINUTES: Joi.number().default(30).description('minutes after which access tokens expire'),
@@ -28,7 +28,7 @@ const envVarsSchema = Joi.object()
     MINIO_USE_SSL: Joi.boolean().default(false),
     MINIO_ACCESS_KEY: Joi.string().description('minio user id'),
     MINIO_SECRET_KEY: Joi.string().description('minio password'),
-    BUCKET_NAME: Joi.string().default('').description('bucket name'),
+    MINIO_BUCKET_NAME: Joi.string().default('').description('bucket name'),
   })
   .unknown();
 
@@ -73,6 +73,6 @@ module.exports = {
     useSSL: envVars.MINIO_USE_SSL,
     access_key: envVars.MINIO_ACCESS_KEY,
     secret_key: envVars.MINIO_SECRET_KEY,
-    bucket_name: envVars.BUCKET_NAME,
+    bucket_name: envVars.MINIO_BUCKET_NAME,
   },
 };

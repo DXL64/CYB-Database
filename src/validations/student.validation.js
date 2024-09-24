@@ -11,7 +11,6 @@ const createStudent = {
     name: Joi.string().required().trim(),
     email: Joi.string().email().trim().lowercase(),
     phone: Joi.string().trim(),
-    imgSrc: Joi.string().trim(),
     schoolYear: Joi.string().trim(),
     major: Joi.string().trim(),
     dob: Joi.string().trim(),
