@@ -5,7 +5,6 @@ services:
     build: .
     container_name: cyb-back-end
     image: node-app
-    container_name: backend
     environment:
       - MONGODB_URL=mongodb://mongodb:27017/node-boilerplate
     ports:
@@ -20,9 +19,8 @@ services:
   mongodb:
     container_name: cyb-mongodb
     image: mongo:4.2.1-bionic
-    container_name: mongodb
     ports:
-      - '27017:27017'
+      - '27017:27017' 
     volumes:
       - ./data/db:/data/db
     networks:
@@ -31,7 +29,6 @@ services:
   minio:
     container_name: cyb-minio
     image: "minio/minio:RELEASE.2022-04-29T01-27-09Z"
-    container_name: minio
     restart: always
     environment:
       MINIO_ROOT_USER: ${MINIO_ADMIN}
