@@ -13,7 +13,7 @@ router.get('/:teacherId', validate(teacherValidation.getTeacher), teacherControl
 router.post('/', [upload.single('file'), validate(teacherValidation.createTeacher)], teacherController.createTeacher);
 router.put(
   '/:teacherId',
-  validate([upload.single('file'), teacherValidation.updateTeacher]),
+  [upload.single('file'), validate(teacherValidation.updateTeacher)],
   teacherController.updateTeacher
 );
 
