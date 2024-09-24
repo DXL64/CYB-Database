@@ -52,6 +52,11 @@ const teacherSchema = mongoose.Schema(
       enum: ['male', 'female'],
       required: true,
     },
+    active: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
     achievements: {
       type: String,
       trim: true,

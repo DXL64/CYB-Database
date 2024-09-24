@@ -26,6 +26,7 @@ const createTeacher = {
     workSince: Joi.string().optional(),
     workUntil: Joi.string().optional(),
     gender: Joi.string().valid('male', 'female').required(),
+    active: Joi.boolean(),
     achievements: Joi.string().optional(),
   }),
 };
@@ -48,6 +49,7 @@ const updateTeacher = {
     workSince: Joi.string().optional(),
     workUntil: Joi.string().optional(),
     gender: Joi.string().valid('male', 'female').optional(),
+    active: Joi.boolean(),
     achievements: Joi.string().optional(),
   }),
 };
