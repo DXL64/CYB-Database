@@ -18,6 +18,13 @@ const createTeacher = async (teacherBody) => {
   return Teacher.create(newTeacher);
 };
 
+const createTeacherNoIMG = async (teacherBody) => {
+  const newTeacher = {
+    ...teacherBody,
+  };
+  return Teacher.create(newTeacher);
+};
+
 const queryTeachers = async (filter, options) => {
   const teachers = await Teacher.paginate(filter, options);
   return teachers;
@@ -68,6 +75,7 @@ const deleteTeacherById = async (userId) => {
 
 module.exports = {
   createTeacher,
+  createTeacherNoIMG,
   queryTeachers,
   getTeacherById,
   updateTeacherById,

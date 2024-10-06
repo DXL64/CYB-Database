@@ -13,6 +13,11 @@ const createTeacher = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).send(teacher);
 });
 
+const createTeacherNoIMG = catchAsync(async (req, res) => {
+  const teacher = await teacherService.createTeacherNoIMG(req.body);
+  res.status(httpStatus.CREATED).send(teacher);
+});
+
 const updateTeacher = catchAsync(async (req, res) => {
   if (req.file) {
     req.body.file = req.file;
@@ -43,6 +48,7 @@ const deleteTeacher = catchAsync(async (req, res) => {
 
 module.exports = {
   createTeacher,
+  createTeacherNoIMG,
   getTeachers,
   getTeacher,
   updateTeacher,

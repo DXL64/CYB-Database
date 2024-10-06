@@ -10,7 +10,9 @@ const router = express.Router();
 
 router.get('/', validate(teacherValidation.getTeachers), teacherController.getTeachers);
 router.get('/:teacherId', validate(teacherValidation.getTeacher), teacherController.getTeacher);
+router.delete('/:teacherId', validate(teacherValidation.getTeacher), teacherController.deleteTeacher);
 router.post('/', [upload.single('file'), validate(teacherValidation.createTeacher)], teacherController.createTeacher);
+router.post('/noimg', validate(teacherValidation.createTeacher), teacherController.createTeacherNoIMG);
 router.put(
   '/:teacherId',
   [upload.single('file'), validate(teacherValidation.updateTeacher)],
