@@ -4,7 +4,7 @@ const validate = require('../../middlewares/validate');
 const { teacherController } = require('../../controllers');
 const { teacherValidation } = require('../../validations');
 
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: './uploads/' });
 
 const router = express.Router();
 
@@ -18,5 +18,5 @@ router.put(
   [upload.single('file'), validate(teacherValidation.updateTeacher)],
   teacherController.updateTeacher
 );
-
+router.post('/bulk', upload.single('file'), teacherController.bulk)
 module.exports = router;
