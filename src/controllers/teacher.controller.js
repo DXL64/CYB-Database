@@ -41,10 +41,18 @@ const deleteTeacher = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
+const bulk = catchAsync(async (req, res) => {
+  if (!req.file) {
+    return res.status(httpStatus.BAD_REQUEST).send({ message: 'File is required' });
+  }
+  const teacher = await teacherService.bulkUpload(req.file);
+  res.status(httpStatus.CREATED).send(teacher);
+})
 module.exports = {
   createTeacher,
   getTeachers,
   getTeacher,
   updateTeacher,
   deleteTeacher,
+  bulk
 };

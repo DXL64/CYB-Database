@@ -4,7 +4,7 @@ const validate = require('../../middlewares/validate');
 const { studentController } = require('../../controllers');
 const { studentValidation } = require('../../validations');
 
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: './uploads/' });
 
 const router = express.Router();
 
