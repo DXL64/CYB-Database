@@ -97,7 +97,11 @@ const bulkUpload = (file) => {
           if (typeof item.active === 'string') {
             item.active = item.active.toUpperCase() === 'TRUE'; // Chuyển đổi "TRUE" hoặc "FALSE" thành true hoặc false
           }
-          
+          item.position = !item.position ? "Giáo viên" : item.position
+          if(!item.position) {
+            item.position = "Giáo viên"
+          }
+
           return item;
         });
 
