@@ -37,7 +37,7 @@ const teacherSchema = mongoose.Schema(
       trim: true,
     },
     dob: {
-      type: Date,
+      type: String,
     },
     workSince: {
       type: String,

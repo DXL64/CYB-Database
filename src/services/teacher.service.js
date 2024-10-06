@@ -74,7 +74,6 @@ const deleteTeacherById = async (userId) => {
 };
 
 const bulkUpload = (file) => {
-  // return file.path
   return new Promise((resolve, reject) => {
     let results = [];
 
@@ -84,21 +83,40 @@ const bulkUpload = (file) => {
         // Lưu từng dòng CSV vào mảng results
         results.push(data);
       })
-      .on('end', () => {
-        // Xóa file tạm sau khi đọc xong
-        fs.unlinkSync(file.path);
+      .on('end', async () => {
+        // Chuyển đổi giá trị gender từ 'Nam' thành 'male' và các giá trị khác thành 'female'
         results = results.map(item => {
           item.gender = item.gender === 'Nam' ? 'male' : 'female';
+
           if (item.dob) {
             const [day, month, year] = item.dob.split('/');
-            item.dob = `${year}-${month}-${day}`; // Định dạng thành 'yyyy-mm-dd'
+            item.dob = `${year}`;
           }
+
+          // Chuyển đổi giá trị active từ chuỗi sang boolean
+          if (typeof item.active === 'string') {
+            item.active = item.active.toUpperCase() === 'TRUE'; // Chuyển đổi "TRUE" hoặc "FALSE" thành true hoặc false
+          }
+          
           return item;
         });
-        Teacher.insertMany(results)
-        
-        // Resolve và trả về kết quả dưới dạng JSON
-        resolve(results);
+
+        // Xóa file tạm sau khi đọc xong
+        fs.unlinkSync(file.path);
+
+        // Chèn từng tài liệu vào collection Teacher và bỏ qua tài liệu không hợp lệ
+        const insertResults = [];
+        for (const teacher of results) {
+          try {
+            const insertedDoc = await Teacher.create(teacher);
+            insertResults.push(insertedDoc);
+          } catch (error) {
+            console.log(`Skipping invalid teacher data: ${JSON.stringify(teacher)}, Error: ${error.message}`);
+          }
+        }
+
+        // Resolve với kết quả là các tài liệu hợp lệ vừa được chèn vào
+        resolve(insertResults);
       })
       .on('error', (err) => {
         // Xóa file nếu gặp lỗi
@@ -108,7 +126,8 @@ const bulkUpload = (file) => {
         reject('Error reading the CSV file');
       });
   });
-}
+};
+
 
 module.exports = {
   createTeacher,
