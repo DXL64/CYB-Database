@@ -43,21 +43,21 @@ services:
     networks:
       - node-network
   
-  mc:
-    image: minio/mc:latest
-    container_name: cyb-mc
-    depends_on:
-    - minio
-    entrypoint: >
-      /bin/sh -c "
-      /usr/bin/mc config host rm local;
-      /usr/bin/mc config host add --quiet --api s3v4 local http://cyb-minio:9000 ${MINIO_ADMIN} ${MINIO_PASSWORD};
-      /usr/bin/mc rb --force local/${MINIO_BUCKET_NAME}/;
-      /usr/bin/mc mb --quiet local/${MINIO_BUCKET_NAME}/;
-      /usr/bin/mc anonymous set public local/${MINIO_BUCKET_NAME};
-      "
-    networks:
-      - node-network
+  # mc:
+  #   image: minio/mc:latest
+  #   container_name: cyb-mc
+  #   depends_on:
+  #   - minio
+  #   entrypoint: >
+  #     /bin/sh -c "
+  #     /usr/bin/mc config host rm local;
+  #     /usr/bin/mc config host add --quiet --api s3v4 local http://cyb-minio:9000 ${MINIO_ADMIN} ${MINIO_PASSWORD};
+  #     /usr/bin/mc rb --force local/${MINIO_BUCKET_NAME}/;
+  #     /usr/bin/mc mb --quiet local/${MINIO_BUCKET_NAME}/;
+  #     /usr/bin/mc anonymous set public local/${MINIO_BUCKET_NAME};
+  #     "
+  #   networks:
+  #     - node-network
 
 networks:
   node-network:

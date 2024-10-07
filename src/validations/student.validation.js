@@ -2,7 +2,9 @@ const Joi = require('joi');
 
 const getStudents = {
   query: Joi.object().keys({
-    // Có thể thêm các trường để lọc hoặc phân trang ở đây nếu cần
+    name: Joi.string().optional(),
+    page: Joi.number().integer().optional(),
+    limit: Joi.number().integer().optional(),
   }),
 };
 
@@ -11,7 +13,7 @@ const createStudent = {
     name: Joi.string().required().trim(),
     email: Joi.string().email().trim().lowercase(),
     phone: Joi.string().trim(),
-    schoolYear: Joi.number(),
+    schoolYear: Joi.string().trim(),
     major: Joi.string().trim(),
     dob: Joi.string().trim(),
     studySince: Joi.string().trim(),
@@ -34,7 +36,7 @@ const updateStudent = {
     email: Joi.string().email().trim().lowercase(),
     phone: Joi.string().trim(),
     imgSrc: Joi.string().trim(),
-    schoolYear: Joi.number(),
+    schoolYear: Joi.string().trim(),
     major: Joi.string().trim(),
     dob: Joi.string().trim(),
     studySince: Joi.string().trim(),
