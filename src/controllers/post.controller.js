@@ -5,10 +5,11 @@ const catchAsync = require('../utils/catchAsync');
 const { postService } = require('../services');
 
 const create = catchAsync(async (req, res) => {
-  if (!req.file) {
-    return res.status(httpStatus.BAD_REQUEST).send({ message: 'File is required' });
+  if (!req.files) {
+    return res.status(httpStatus.BAD_REQUEST).send({ message: 'Files: [content, file] is required' });
   }
-  req.body.file = req.file;
+  req.body.file = req.files.content[0];
+  req.body.content = req.files.file[0];
   const post = await postService.createModel(req.body);
   res.status(httpStatus.CREATED).send(post);
 });

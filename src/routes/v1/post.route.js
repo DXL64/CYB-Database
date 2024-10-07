@@ -10,7 +10,17 @@ const router = express.Router();
 router.get('/', validate(postValidation.getModels), postController.getList);
 router.get('/:postId', validate(postValidation.getModel), postController.get);
 router.delete('/:postId', validate(postValidation.deleteModel), postController.deleteModel);
-router.post('/', [upload.single('file'), validate(postValidation.createModel)], postController.create);
+router.post(
+    '/',
+    [
+        upload.fields([
+            { name: 'file', maxCount: 1 }, // File đầu tiên
+            { name: 'content', maxCount: 1 } // File thứ hai
+        ]),
+        validate(postValidation.createModel)
+    ],
+    postController.create
+);
 router.put(
   '/:postId',
   [upload.single('file'), validate(postValidation.updateModel)],
