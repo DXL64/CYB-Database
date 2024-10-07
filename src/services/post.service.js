@@ -13,7 +13,7 @@ const createModel = async (body) => {
     const fileStream = fs.createReadStream(filePath);
     const fileStat = fs.statSync(filePath);
 
-    const contentSrc = `posts/_contents/${body.content.filename}.html`;
+    const contentSrc = `posts/_contents/${body.content.filename}.txt`;
     const contentPath = body.content.path;
     const contentStream = fs.createReadStream(contentPath);
     const contentStat = fs.statSync(contentPath);
