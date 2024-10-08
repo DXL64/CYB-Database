@@ -12,7 +12,7 @@ const createModel = {
   body: Joi.object().keys({
     title: Joi.string().required(),
     imgSrc: Joi.string().optional(),
-    // content: Joi.string().required(),
+    content: Joi.string().required(),
     category: Joi.string().optional(),
   }),
 };
