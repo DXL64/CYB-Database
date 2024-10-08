@@ -4,7 +4,12 @@ const validate = require('../../middlewares/validate');
 const { postController } = require('../../controllers');
 const { postValidation } = require('../../validations');
 
-const upload = multer({ dest: './uploads/' });
+const upload = multer({
+    dest: './uploads/',
+    limits: {
+        fieldSize: 5 * 1024 * 1024
+    }
+});
 const router = express.Router();
 
 router.get('/', validate(postValidation.getModels), postController.getList);
