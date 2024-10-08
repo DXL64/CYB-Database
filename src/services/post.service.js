@@ -12,23 +12,15 @@ const createModel = async (body) => {
     const filePath = body.file.path;
     const fileStream = fs.createReadStream(filePath);
     const fileStat = fs.statSync(filePath);
-
-    const contentSrc = `posts/_contents/${body.content.filename}.txt`;
-    const contentPath = body.content.path;
-    const contentStream = fs.createReadStream(contentPath);
-    const contentStat = fs.statSync(contentPath);
-
     // Tạo các promise cho hai tác vụ
     const uploadImgPromise = minioService.putObject(imgSrc, fileStream, fileStat.size);
-    const uploadContentPromise = minioService.putObject(contentSrc, contentStream, contentStat.size);
 
     // Chờ cho cả hai tác vụ hoàn thành
-    await Promise.all([uploadImgPromise, uploadContentPromise]);
+    await Promise.all([uploadImgPromise]);
 
     const newModel = {
         ...body,
         imgSrc,
-        content: contentSrc,
     };
 
     return Post.create(newModel);

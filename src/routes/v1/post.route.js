@@ -20,7 +20,6 @@ router.post(
     [
         upload.fields([
             { name: 'file', maxCount: 1 }, // File đầu tiên
-            { name: 'content', maxCount: 1 } // File thứ hai
         ]),
         validate(postValidation.createModel)
     ],
