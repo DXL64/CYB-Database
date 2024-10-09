@@ -3,4 +3,3 @@ module.exports.userController = require('./user.controller');
 module.exports.studentController = require('./student.controller');
 module.exports.teacherController = require('./teacher.controller');
 module.exports.postController = require('./post.controller')
-module.exports.minioController = require('./minio.controller')
