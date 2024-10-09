@@ -27,6 +27,7 @@ const createTeacher = {
     workUntil: Joi.string().optional(),
     gender: Joi.string().valid('male', 'female').required(),
     active: Joi.boolean(),
+    status: Joi.string().valid('working', 'retired', 'transfer', 'passed_away').required(),
     achievements: Joi.string().optional(),
   }),
 };
