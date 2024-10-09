@@ -16,5 +16,6 @@ router.put(
   [upload.single('file'), validate(wallpaperValidation.updateWallpaper)],
   wallpaperController.updateWallpaper
 );
+router.delete('/:wallpaperId', validate(wallpaperValidation.deleteWallpaper), wallpaperController.deleteWallpaper);
 
 module.exports = router;
