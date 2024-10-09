@@ -15,7 +15,7 @@ const wallpaperSchema = mongoose.Schema({
         trim: true,
     },
     active: {
-        type: Boolean,
+        type: String,
         required: false,
         trim: true,
     }
