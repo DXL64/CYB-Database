@@ -20,6 +20,7 @@ const createStudent = {
     studyUntil: Joi.string().trim(),
     gender: Joi.string().valid('male', 'female').required(),
     active: Joi.boolean(),
+    priority: Joi.string().trim(),
     achievements: Joi.string().trim(),
   }),
 };
@@ -43,6 +44,7 @@ const updateStudent = {
     studyUntil: Joi.string().trim(),
     gender: Joi.string().valid('male', 'female'),
     active: Joi.boolean(),
+    priority: Joi.string().trim(),
     achievements: Joi.string().trim(),
   }),
 };

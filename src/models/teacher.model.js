@@ -62,6 +62,10 @@ const teacherSchema = mongoose.Schema(
       enum: ['working', 'retired', 'transfer', 'passed_away'],
       required: true,
     },
+    priority: {
+      type: String,
+      trim: true,
+    },
     achievements: {
       type: String,
       trim: true,

@@ -28,6 +28,7 @@ const createTeacher = {
     gender: Joi.string().valid('male', 'female').required(),
     active: Joi.boolean(),
     status: Joi.string().valid('working', 'retired', 'transfer', 'passed_away').required(),
+    priority: Joi.string().trim(),
     achievements: Joi.string().optional(),
   }),
 };
@@ -52,6 +53,7 @@ const updateTeacher = {
     gender: Joi.string().valid('male', 'female').optional(),
     active: Joi.boolean(),
     status: Joi.string().valid('working', 'retired', 'transfer', 'passed_away').required(),
+    priority: Joi.string().trim(),
     achievements: Joi.string().optional(),
   }),
 };
