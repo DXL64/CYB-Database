@@ -63,7 +63,7 @@ const teacherSchema = mongoose.Schema(
       required: true,
     },
     priority: {
-      type: String,
+      type: Number,
       trim: true,
     },
     achievements: {

@@ -58,7 +58,7 @@ const studentSchema = new mongoose.Schema(
       default: true,
     },
     priority: {
-      type: String,
+      type: Number,
       trim: true,
     },
     achievements: {
