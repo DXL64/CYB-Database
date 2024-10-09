@@ -1,7 +1,7 @@
 {
   "apps": [
     {
-      "name": "app",
+      "name": "cyb",
       "script": "src/index.js",
       "instances": 1,
       "autorestart": true,

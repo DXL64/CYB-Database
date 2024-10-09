@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
-const validator = require('validator');
 const { toJSON, paginate } = require('./plugins');
-const { string, required } = require('joi');
-
 
 const postSchema = mongoose.Schema(
     {

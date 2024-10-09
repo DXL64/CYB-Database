@@ -6,3 +6,4 @@ module.exports.studentService = require('./student.service');
 module.exports.teacherService = require('./teacher.service');
 module.exports.minioService = require('./minio.service');
 module.exports.postService = require('./post.service')
+module.exports.wallpaperService = require('./wallpaper.service')
