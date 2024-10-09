@@ -2,15 +2,17 @@ const Joi = require('joi')
 
 const getListWallpaper = {
     query: Joi.object().keys({
-        active: Joi.boolean().optional()
+        active: Joi.string().optional(),
+        page: Joi.number().integer().optional(),
+        limit: Joi.number().integer().optional(),
     })
 }
 
 const createWallpaper = {
     body: Joi.object().keys({
-        active: Joi.boolean().default(false),
-        post_id: Joi.boolean().default(''),
-        imgSrc: Joi.boolean().default('')
+        active: Joi.string().default(false),
+        post_id: Joi.string().default(''),
+        imgSrc: Joi.string().default('')
     })
 }
 
@@ -19,9 +21,9 @@ const updateWallpaper = {
         wallpaperId: Joi.string().required()
     }),
     body: Joi.object().keys({
-        active: Joi.boolean().default(false),
-        post_id: Joi.boolean().default(''),
-        imgSrc: Joi.boolean().default('')
+        active: Joi.string().default(false),
+        post_id: Joi.string().default(''),
+        imgSrc: Joi.string().default('')
     })
 }
 
