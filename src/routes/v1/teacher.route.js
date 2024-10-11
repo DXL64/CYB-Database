@@ -16,7 +16,7 @@ router.post('/noimg', validate(teacherValidation.createTeacher), teacherControll
 router.put(
   '/:teacherId',
   [upload.single('file'), validate(teacherValidation.updateTeacher)],
-  teacherController.updateTeacher
+  teacherController.updateModel
 );
 router.post('/bulk', upload.single('file'), teacherController.bulk)
 module.exports = router;
