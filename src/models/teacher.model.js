@@ -11,7 +11,6 @@ const teacherSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      unique: true,
       trim: true,
       lowercase: true,
       validate(value) {
