@@ -17,7 +17,7 @@ const getTeachers = {
 const createTeacher = {
   body: Joi.object().keys({
     name: Joi.string().required(),
-    email: Joi.string().email().required(),
+    email: Joi.string().email().optional(),
     phone: Joi.string().optional(),
     imgSrc: Joi.string().optional(),
     position: Joi.string().optional(),

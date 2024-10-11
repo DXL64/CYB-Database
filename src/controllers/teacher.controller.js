@@ -4,7 +4,7 @@ const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { teacherService } = require('../services');
 
-const createTeacher = catchAsync(async (req, res) => {
+const createModel = catchAsync(async (req, res) => {
   if (!req.file) {
     return res.status(httpStatus.BAD_REQUEST).send({ message: 'File is required' });
   }
@@ -18,7 +18,7 @@ const createTeacherNoIMG = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).send(teacher);
 });
 
-const updateTeacher = catchAsync(async (req, res) => {
+const updateModel = catchAsync(async (req, res) => {
   if (req.file) {
     req.body.file = req.file;
   }
@@ -26,14 +26,14 @@ const updateTeacher = catchAsync(async (req, res) => {
   res.send(teacher);
 });
 
-const getTeachers = catchAsync(async (req, res) => {
+const getList = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['name', 'major', 'position']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await teacherService.queryTeachers(filter, options);
   res.send(result);
 });
 
-const getTeacher = catchAsync(async (req, res) => {
+const getModel = catchAsync(async (req, res) => {
   const teacher = await teacherService.getTeacherById(req.params.teacherId);
   if (!teacher) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Teacher not found');
@@ -41,7 +41,7 @@ const getTeacher = catchAsync(async (req, res) => {
   res.send(teacher);
 });
 
-const deleteTeacher = catchAsync(async (req, res) => {
+const deleteModel = catchAsync(async (req, res) => {
   await teacherService.deleteTeacherById(req.params.teacherId);
   res.status(httpStatus.NO_CONTENT).send();
 });
@@ -54,11 +54,11 @@ const bulk = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).send(teacher);
 })
 module.exports = {
-  createTeacher,
   createTeacherNoIMG,
-  getTeachers,
-  getTeacher,
-  updateTeacher,
-  deleteTeacher,
+  createModel,
+  getList,
+  getModel,
+  updateModel,
+  deleteModel,
   bulk
 };
