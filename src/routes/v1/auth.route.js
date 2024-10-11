@@ -5,15 +5,21 @@ const authController = require('../../controllers/auth.controller');
 const auth = require('../../middlewares/auth');
 
 const router = express.Router();
+const upload = multer({
+    dest: './uploads/',
+    limits: {
+        fieldSize: 5 * 1024 * 1024
+    }
+});
 
-router.post('/register', validate(authValidation.register), authController.register);
-router.post('/login', validate(authValidation.login), authController.login);
-router.post('/logout', validate(authValidation.logout), authController.logout);
-router.post('/refresh-tokens', validate(authValidation.refreshTokens), authController.refreshTokens);
-router.post('/forgot-password', validate(authValidation.forgotPassword), authController.forgotPassword);
-router.post('/reset-password', validate(authValidation.resetPassword), authController.resetPassword);
+router.post('/register', [upload.single('file'), validate(authValidation.register)], authController.register);
+router.post('/login', [upload.single('file'), validate(authValidation.login)], authController.login);
+router.post('/logout', [upload.single('file'), validate(authValidation.logout)], authController.logout);
+router.post('/refresh-tokens', [upload.single('file'), validate(authValidation.refreshTokens)], authController.refreshTokens);
+router.post('/forgot-password', [upload.single('file'), validate(authValidation.forgotPassword)], authController.forgotPassword);
+router.post('/reset-password', [upload.single('file'), validate(authValidation.resetPassword)], authController.resetPassword);
 router.post('/send-verification-email', auth(), authController.sendVerificationEmail);
-router.post('/verify-email', validate(authValidation.verifyEmail), authController.verifyEmail);
+router.post('/verify-email', [upload.single('file'), validate(authValidation.verifyEmail)], authController.verifyEmail);
 
 module.exports = router;
 
