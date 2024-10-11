@@ -8,7 +8,7 @@ const upload = multer({ dest: './uploads/' });
 
 const router = express.Router();
 
-router.get('/', validate(teacherValidation.getTeachers), teacherController.getModel);
+router.get('/', validate(teacherValidation.getTeachers), teacherController.getList);
 router.get('/:teacherId', validate(teacherValidation.getTeacher), teacherController.getModel);
 router.delete('/:teacherId', validate(teacherValidation.getTeacher), teacherController.deleteModel);
 router.post('/', [upload.single('file'), validate(teacherValidation.createTeacher)], teacherController.createModel);
