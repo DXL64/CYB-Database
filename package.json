@@ -11,6 +11,8 @@
     "node": ">=12.0.0"
   },
   "scripts": {
+    "migrate:up": "migrate-mongo up",
+    "migrate:down": "migrate-mongo down",
     "start": "pm2 start ecosystem.config.json --no-daemon",
     "dev": "cross-env NODE_ENV=development nodemon src/index.js",
     "test": "jest -i --colors --verbose --detectOpenHandles",
