@@ -8,33 +8,43 @@ const { postValidation } = require('../../validations');
 const upload = multer({
     dest: './uploads/',
     limits: {
-        fieldSize: 5 * 1024 * 1024
-    }
+        fieldSize: 5 * 1024 * 1024, // Giới hạn dung lượng file là 5MB
+    },
 });
+
 const router = express.Router();
 
-router.route('/')
-    .get(auth("listPosts"), validate(postValidation.getModels), postController.getList)
+router
+    .route('/')
     .post(
-        auth("createPost"),
-        upload.fields([
-            { name: 'file', maxCount: 1 },
-        ]),
+        auth('user'),
+        upload.fields([{ name: 'file', maxCount: 1 }]),
         validate(postValidation.createModel),
         postController.create
+    )
+    .get(
+        auth('user'),
+        validate(postValidation.getModels),
+        postController.getList
     );
 
-router.route('/:postId')
+router
+    .route('/:postId')
     .get(
-        auth("getPost"), validate(postValidation.getModel),
-        postController.get
+        auth('user'),  // Xác thực quyền "getPost"
+        validate(postValidation.getModel),  // Xác thực dữ liệu đầu vào
+        postController.get  // Gọi controller để xử lý
+    )
+    .put(
+        auth('user'),  // Xác thực quyền "updatePost"
+        upload.single('file'),  // Đăng tải file
+        validate(postValidation.updateModel),  // Xác thực dữ liệu đầu vào
+        postController.update  // Gọi controller để xử lý
     )
     .delete(
-        auth("delete"), validate(postValidation.deleteModel),
-        postController.deleteModel)
-    .put(
-        auth("updatePost"), upload.single('file'), validate(postValidation.updateModel),
-        postController.update
+        auth('user'),  // Xác thực quyền "deletePost"
+        validate(postValidation.deleteModel),  // Xác thực dữ liệu đầu vào
+        postController.deleteModel  // Gọi controller để xử lý
     );
 
 module.exports = router;

@@ -11,27 +11,27 @@ const router = express.Router();
 
 router.get(
   '/',
-  [auth('getWallpapers'), validate(wallpaperValidation.getListWallpaper)],
+  [auth('user'), validate(wallpaperValidation.getListWallpaper)],
   wallpaperController.getWallpapers
 );
 router.get(
   '/:wallpaperId',
-  [auth('getWallpaper'), validate(wallpaperValidation.getWallpaper)],
+  [auth('user'), validate(wallpaperValidation.getWallpaper)],
   wallpaperController.getWallpaper
 );
 router.post(
   '/',
-  [auth('createWallpaper'), upload.single('file'), validate(wallpaperValidation.createWallpaper)],
+  [auth('user'), upload.single('file'), validate(wallpaperValidation.createWallpaper)],
   wallpaperController.createWallpaper
 );
 router.put(
   '/:wallpaperId',
-  [auth('updateWallpaper'), upload.single('file'), validate(wallpaperValidation.updateWallpaper)],
+  [auth('user'), upload.single('file'), validate(wallpaperValidation.updateWallpaper)],
   wallpaperController.updateWallpaper
 );
 router.delete(
   '/:wallpaperId',
-  [auth('deleteWallpaper'), validate(wallpaperValidation.deleteWallpaper)],
+  [auth('user'), validate(wallpaperValidation.deleteWallpaper)],
   wallpaperController.deleteWallpaper
 );
 

@@ -9,39 +9,38 @@ const upload = multer({ dest: './uploads/' });
 
 const router = express.Router();
 
-router.get(
-  '/',
-  [auth('getTeachers'), validate(teacherValidation.getTeachers)],
-  teacherController.getList
-);
-router.get(
-  '/:teacherId',
-  [auth('getTeacher'), validate(teacherValidation.getTeacher)],
-  teacherController.getModel
-);
-router.delete(
-  '/:teacherId',
-  [auth('deleteTeacher'), validate(teacherValidation.getTeacher)],
-  teacherController.deleteModel
-);
-router.post(
-  '/',
-  [auth('createTeacher'), upload.single('file'), validate(teacherValidation.createTeacher)],
-  teacherController.createModel
-);
+router.route('/')
+  .get(
+    auth('user'),
+    validate(teacherValidation.getTeachers),
+    teacherController.getList
+  ).post(
+    [auth('user'), upload.single('file'), validate(teacherValidation.createTeacher)],
+    teacherController.createModel
+  )
 router.post(
   '/noimg',
-  [auth('createTeacherNoIMG'), validate(teacherValidation.createTeacher)],
+  [auth('user'), validate(teacherValidation.createTeacher)],
   teacherController.createTeacherNoIMG
-);
-router.put(
-  '/:teacherId',
-  [auth('updateTeacher'), upload.single('file'), validate(teacherValidation.updateTeacher)],
-  teacherController.updateModel
-);
+);;
+
+router.route('/:teacherId')
+  .get(
+    auth('user'),
+    validate(teacherValidation.getTeacher),
+    teacherController.getModel
+  ).delete(
+    auth('user'), validate(teacherValidation.getTeacher),
+    teacherController.deleteModel
+  ).put(
+    auth('user'), upload.single('file'),
+    validate(teacherValidation.updateTeacher),
+    teacherController.updateModel
+  )
+
 router.post(
   '/bulk',
-  [auth('bulkCreateTeachers'), upload.single('file')],
+  auth('user'), upload.single('file'),
   teacherController.bulk
 );
 
