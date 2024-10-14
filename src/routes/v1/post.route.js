@@ -14,28 +14,26 @@ const upload = multer({
 const router = express.Router();
 
 router.route('/')
-    .get([auth("listPosts"), validate(postValidation.getModels)], postController.getList)
+    .get(auth("listPosts"), validate(postValidation.getModels), postController.getList)
     .post(
-        [
-            auth("createPost"),
-            upload.fields([
-                { name: 'file', maxCount: 1 },
-            ]),
-            validate(postValidation.createModel)
-        ],
+        auth("createPost"),
+        upload.fields([
+            { name: 'file', maxCount: 1 },
+        ]),
+        validate(postValidation.createModel),
         postController.create
     );
 
 router.route('/:postId')
     .get(
-        [auth("getPost"), validate(postValidation.getModel)],
+        auth("getPost"), validate(postValidation.getModel),
         postController.get
     )
     .delete(
-        [auth("delete"), validate(postValidation.deleteModel)],
+        auth("delete"), validate(postValidation.deleteModel),
         postController.deleteModel)
     .put(
-        [auth("updatePost"), upload.single('file'), validate(postValidation.updateModel)],
+        auth("updatePost"), upload.single('file'), validate(postValidation.updateModel),
         postController.update
     );
 
