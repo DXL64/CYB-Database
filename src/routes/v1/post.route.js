@@ -1,5 +1,6 @@
 const express = require('express');
 const multer = require('multer');
+const auth = require('../../middlewares/auth');
 const validate = require('../../middlewares/validate');
 const { postController } = require('../../controllers');
 const { postValidation } = require('../../validations');
@@ -12,23 +13,30 @@ const upload = multer({
 });
 const router = express.Router();
 
-router.get('/', validate(postValidation.getModels), postController.getList);
-router.get('/:postId', validate(postValidation.getModel), postController.get);
-router.delete('/:postId', validate(postValidation.deleteModel), postController.deleteModel);
-router.post(
-    '/',
-    [
-        upload.fields([
-            { name: 'file', maxCount: 1 }, // File đầu tiên
-        ]),
-        validate(postValidation.createModel)
-    ],
-    postController.create
-);
-router.put(
-  '/:postId',
-  [upload.single('file'), validate(postValidation.updateModel)],
-  postController.update
-);
-// router.post('/bulk', upload.single('file'), teacherController.bulk)
+router.route('/')
+    .get([auth("listPosts"), validate(postValidation.getModels)], postController.getList)
+    .post(
+        [
+            auth("createPost"),
+            upload.fields([
+                { name: 'file', maxCount: 1 },
+            ]),
+            validate(postValidation.createModel)
+        ],
+        postController.create
+    );
+
+router.route('/:postId')
+    .get(
+        [auth("getPost"), validate(postValidation.getModel)],
+        postController.get
+    )
+    .delete(
+        [auth("delete"), validate(postValidation.deleteModel)],
+        postController.deleteModel)
+    .put(
+        [auth("updatePost"), upload.single('file'), validate(postValidation.updateModel)],
+        postController.update
+    );
+
 module.exports = router;
