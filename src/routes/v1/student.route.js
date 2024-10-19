@@ -11,11 +11,33 @@ const router = express.Router();
 
 
 router.route('/')
-  .get([auth('user'), validate(studentValidation.getStudents)], studentController.getStudents)
-  .post([auth('user'), upload.single('file'), validate(studentValidation.createStudent)], studentController.createStudent);
+  .get(
+    [
+      // auth('user'),
+      validate(studentValidation.getStudents)
+    ], studentController.getStudents)
+  .post(
+    [
+      // auth('user'),
+      upload.single('file'),
+      validate(studentValidation.createStudent)
+    ], studentController.createStudent);
 
 router.route('/:studentId')
-  .get([auth('user'), validate(studentValidation.getStudent)], studentController.getStudent)
-  .put([auth('user'), upload.single('file'), validate(studentValidation.updateStudent)], studentController.updateStudent)
-  .delete(auth('user'), [validate(studentValidation.getStudent)], studentController.deleteStudent)
+  .get(
+    [
+      // auth('user'),
+      validate(studentValidation.getStudent)
+    ], studentController.getStudent)
+  .put(
+    [
+      // auth('user'),
+      upload.single('file'),
+      validate(studentValidation.updateStudent)
+    ], studentController.updateStudent)
+  .delete(
+    [
+      // auth('user'),
+      validate(studentValidation.getStudent)
+    ], studentController.deleteStudent)
 module.exports = router;

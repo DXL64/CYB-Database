@@ -17,13 +17,13 @@ const router = express.Router();
 router
     .route('/')
     .post(
-        auth('user'),
+        // auth('user'),
         upload.fields([{ name: 'file', maxCount: 1 }]),
         validate(postValidation.createModel),
         postController.create
     )
     .get(
-        auth('user'),
+        // auth('user'),
         validate(postValidation.getModels),
         postController.getList
     );
@@ -31,20 +31,20 @@ router
 router
     .route('/:postId')
     .get(
-        auth('user'),  // Xác thực quyền "getPost"
-        validate(postValidation.getModel),  // Xác thực dữ liệu đầu vào
-        postController.get  // Gọi controller để xử lý
+        // auth('user'), 
+        validate(postValidation.getModel),
+        postController.get
     )
     .put(
-        auth('user'),  // Xác thực quyền "updatePost"
-        upload.single('file'),  // Đăng tải file
-        validate(postValidation.updateModel),  // Xác thực dữ liệu đầu vào
-        postController.update  // Gọi controller để xử lý
+        // auth('user'),
+        upload.single('file'),
+        validate(postValidation.updateModel),
+        postController.update
     )
     .delete(
-        auth('user'),  // Xác thực quyền "deletePost"
-        validate(postValidation.deleteModel),  // Xác thực dữ liệu đầu vào
-        postController.deleteModel  // Gọi controller để xử lý
+        // auth('user'),
+        validate(postValidation.deleteModel),
+        postController.deleteModel
     );
 
 module.exports = router;
